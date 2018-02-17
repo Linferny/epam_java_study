@@ -8,7 +8,7 @@ public class Logic {
         for (double x = a; x <= b; x += h) {
             print.append(String.format("|% 16f|% 16f|\n", x, Math.tan(2 * x) - 3));
         }
-        
+
         print.append("|----------------|----------------|\n");
 
         System.out.println(print);
