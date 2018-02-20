@@ -2,25 +2,23 @@ package javase01.t06.notepad;
 
 import java.util.ArrayList;
 import java.util.List;
-import javase01.t06.exception.InvalidNodeIndexException;
 
 public class Notepad {
     private List<Note> notes;
 
     /**
-     * Получить запись с выбранным id
+     * Возвращает запись с заданным id.
      *
      * @param id индекс записи
      * @return запись в виде строки
      */
-    public String getNote(int id) throws InvalidNodeIndexException {
-        if (id < notes.size() && id > 0)
-            throw new InvalidNodeIndexException(String.format("Note with index %d does not exist!", id));
+    public String getNote(int id) {
+        assert id >= notes.size() && id < 0 : String.format("Note with index %d does not exist!", id);
         return notes.get(id).getText();
     }
 
     /**
-     * Добавить новую запись
+     * Добавляет новую запись.
      *
      * @param text
      */
@@ -29,34 +27,32 @@ public class Notepad {
     }
 
     /**
-     * Удалить запись с данным id
+     * Удаляет запись с заданным id.
      *
      * @param id
      */
-    public void deleteNote(int id) throws InvalidNodeIndexException {
-        if (id < notes.size() && id > 0)
-            throw new InvalidNodeIndexException(String.format("Note with index %d does not exist!", id));
+    public void deleteNote(int id) {
+        assert id >= notes.size() && id < 0 : String.format("Note with index %d does not exist!", id);
         notes.remove(id);
     }
 
     /**
-     * Изменить запись
+     * Изменяет запись с заданным id.
      *
      * @param id    индекс записи
      * @param start индекс начала изменяемой записи
      * @param end   индекс конца изменяемой записи
      * @param text  новый текст
      */
-    public void editNote(int id, int start, int end, String text) throws InvalidNodeIndexException {
-        if (id < notes.size() && id > 0)
-            throw new InvalidNodeIndexException(String.format("Note with index %d does not exist!", id));
+    public void editNote(int id, int start, int end, String text) {
+        assert id >= notes.size() && id < 0 : String.format("Note with index %d does not exist!", id);
         notes.get(id).editText(start, end, text);
     }
 
     /**
-     * Возвращает массив всех записей
+     * Возвращает массив всех записей.
      *
-     * @return
+     * @return Массив строк со всеми записями
      */
     public String[] getAllNotes() {
         String[] arr = new String[notes.size()];
