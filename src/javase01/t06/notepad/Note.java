@@ -43,8 +43,7 @@ public class Note {
     public void editText(int start, int end, String text) {
         if (start > end || start < 0 || end >= this.text.length())
             return;
-        this.text.delete(start, end);
-        this.text.insert(start + 1, text);
+        this.text.replace(start,end, text);
     }
 
     public Note() {
