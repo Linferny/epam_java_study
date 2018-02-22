@@ -5,6 +5,6 @@ import javase01.t05.logic.Logic;
 public class Main {
     public static void main(String[] args) {
         Logic l = new Logic();
-        l.drawRectMatrix(11);
+        l.drawRectMatrix(6);
     }
 }
