@@ -9,8 +9,6 @@ public class Main {
         notepad.addNote("First note!");
         notepad.addNote("Second NOTE?");
 
-        notepad.deleteNote(-12);
-
         for (String s :
                 notepad.getAllNotes()) {
             System.out.println(s);
