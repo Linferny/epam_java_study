@@ -39,8 +39,34 @@ public class Main {
         pack3 = new StarterPack(pen1, pencil1, eraser2);
         pack4 = new StarterPack(pen2);
 
-        System.out.println("Before sort:");
+        System.out.println("Pack1 before sort:");
         System.out.println(pack1.getString());
-        System.out.println("After sort:");
+        System.out.println("Pack1 after sort by name:");
+        pack1.sortByName();
+        System.out.println(pack1.getString());
+        System.out.println();
+
+
+        System.out.println("Pack2 before sort:");
+        System.out.println(pack2.getString());
+        System.out.println("Pack2 after sort by price:");
+        pack2.sortByPrice();
+        System.out.println(pack2.getString());
+        System.out.println();
+
+
+        System.out.println("Pack3 before sort:");
+        System.out.println(pack3.getString());
+        System.out.println("Pack3 after sort by name and price:");
+        pack3.sortByNamePrice();
+        System.out.println(pack3.getString());
+        System.out.println();
+
+
+        System.out.println("Pack4 before sort:");
+        System.out.println(pack4.getString());
+        System.out.println("Pack4 after sort by name and price:");
+        pack4.sortByNamePrice();
+        System.out.println(pack4.getString());
     }
 }

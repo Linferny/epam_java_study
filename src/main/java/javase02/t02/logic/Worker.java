@@ -29,6 +29,7 @@ public class Worker {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
+        workplace = new Workplace();
     }
 
     public void addStationery(Stationery stationery){

@@ -33,7 +33,7 @@ public class Pen extends Stationery {
     }
 
     public Pen(double price, String name, int length, Material material, Color inkColor) {
-        super(price, name);
+        super(price, name, StationeryType.PEN);
         this.length = length;
         this.material = material;
         this.inkColor = inkColor;

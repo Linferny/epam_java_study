@@ -44,7 +44,7 @@ public class Pencil extends Stationery {
     }
 
     public Pencil(double price, String name, Material material, Color graphiteColor, Hardness hardness, int length) {
-        super(price, name);
+        super(price, name, StationeryType.PENCIL);
         this.material = material;
         this.graphiteColor = graphiteColor;
         this.hardness = hardness;

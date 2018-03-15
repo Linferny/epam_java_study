@@ -1,12 +1,13 @@
 package javase02.t03.model;
 
 import javase02.t02.stationery.*;
+import javase02.t04.logic.PackSorting;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class StarterPack {
+public class StarterPack implements PackSorting {
     private List<Stationery> pack;
 
     public void addStationery(Stationery... stationery) {
@@ -63,11 +64,11 @@ public class StarterPack {
     }
 
     public void sortByName() {
-        sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+        pack.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
     }
 
     public void sortByPrice() {
-        sort((o1, o2) -> {
+        pack.sort((o1, o2) -> {
             if (o1.getPrice() - o2.getPrice() + 0.001 > 0)
                 return 1;
             else if (Math.abs(o1.getPrice() - o2.getPrice()) < 0.001)
@@ -77,8 +78,8 @@ public class StarterPack {
         });
     }
 
-    public void sortByNameAndPrice() {
-        sort((o1, o2) -> {
+    public void sortByNamePrice() {
+        pack.sort((o1, o2) -> {
             if (o1.getPrice() - o2.getPrice() + 0.001 > 0)
                 return 1;
             else if (Math.abs(o1.getPrice() - o2.getPrice()) < 0.001)
@@ -86,10 +87,6 @@ public class StarterPack {
             else
                 return -1;
         });
-    }
-
-    private void sort(Comparator<Stationery> comparator) {
-        pack.sort(comparator);
     }
 
     public String getString(){

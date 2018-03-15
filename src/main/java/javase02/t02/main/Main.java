@@ -45,6 +45,7 @@ public class Main {
         System.out.println(String.format("Rulers count: %d", adam.getStationeryCount(StationeryType.RULER)));
         System.out.println(String.format("All value: %f", adam.getAllValue()));
 
+        System.out.println("Delete pen №1 three times");
         adam.removeStationery(pen1);
         adam.removeStationery(pen1);
         adam.removeStationery(pen1);

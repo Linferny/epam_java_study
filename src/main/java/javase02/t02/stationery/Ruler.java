@@ -24,7 +24,7 @@ public class Ruler extends Stationery {
     }
 
     public Ruler(double price, String name, int length, Material material) {
-        super(price, name);
+        super(price, name, StationeryType.RULER);
         this.length = length;
         this.material = material;
     }
