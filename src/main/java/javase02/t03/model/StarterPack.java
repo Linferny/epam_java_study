@@ -2,58 +2,102 @@ package javase02.t03.model;
 
 import javase02.t02.stationery.*;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 public class StarterPack {
-    private Pen pen;
-    private Pencil pencil;
-    private Eraser eraser;
-    private Ruler ruler;
+    private List<Stationery> pack;
 
-    public Pen getPen() {
-        return pen;
+    public void addStationery(Stationery... stationery) {
+        for (Stationery s :
+                stationery) {
+            if (!pack.contains(s))
+                pack.add(s);
+        }
     }
 
-    public void setPen(Pen pen) {
-        if (pen != null)
-            this.pen = pen;
+    public boolean removeStationery(Stationery stationery) {
+        return pack.remove(stationery);
     }
 
-    public Pencil getPencil() {
-        return pencil;
+    public Stationery[] getStationery() {
+        Stationery[] stationeries = new Stationery[pack.size()];
+        return pack.toArray(stationeries);
     }
 
-    public void setPencil(Pencil pencil) {
-        if (pencil != null)
-            this.pencil = pencil;
+    public StarterPack() {
+        pack = new ArrayList<>();
     }
 
-    public Eraser getEraser() {
-        return eraser;
+    /**
+     * Приватный метод для уменьшения дублирования кода при создании объекта StarterPack с несколькими канцелярскими товарами
+     *
+     * @param stationery
+     */
+    private StarterPack(Stationery... stationery) {
+        pack = new ArrayList<>();
+        for (Stationery s :
+                stationery) {
+            if (!pack.contains(s))
+                pack.add(s);
+        }
     }
 
-    public void setEraser(Eraser eraser) {
-        if (eraser != null)
-            this.eraser = eraser;
+    public StarterPack(Pen pen, Eraser eraser, Ruler ruler, Pencil pencil) {
+        this(pencil, ruler, eraser, pen);
     }
 
-    public Ruler getRuler() {
-        return ruler;
+    public StarterPack(Pencil pencil, Eraser eraser, Ruler ruler) {
+        this(ruler, eraser, pencil);
     }
 
-    public void setRuler(Ruler ruler) {
-        if (ruler != null)
-            this.ruler = ruler;
+    public StarterPack(Pen pen, Pencil pencil, Eraser eraser) {
+        this(eraser, pencil, pen);
     }
 
-    public StarterPack(Pen pen, Pencil pencil, Eraser eraser, Ruler ruler) {
-        if (pen == null || pencil == null || eraser == null || ruler == null)
-            return;
-        this.pen = pen;
-        this.pencil = pencil;
-        this.eraser = eraser;
-        this.ruler = ruler;
+    public StarterPack(Pen pen) {
+        pack = new ArrayList<Stationery>();
+
+        pack.add(pen);
     }
 
-    public Stationery[] getAllItems(){
-        return new Stationery[]{pen, pencil, eraser, ruler};
+    public void sortByName() {
+        sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+    }
+
+    public void sortByPrice() {
+        sort((o1, o2) -> {
+            if (o1.getPrice() - o2.getPrice() + 0.001 > 0)
+                return 1;
+            else if (Math.abs(o1.getPrice() - o2.getPrice()) < 0.001)
+                return 0;
+            else
+                return -1;
+        });
+    }
+
+    public void sortByNameAndPrice() {
+        sort((o1, o2) -> {
+            if (o1.getPrice() - o2.getPrice() + 0.001 > 0)
+                return 1;
+            else if (Math.abs(o1.getPrice() - o2.getPrice()) < 0.001)
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            else
+                return -1;
+        });
+    }
+
+    private void sort(Comparator<Stationery> comparator) {
+        pack.sort(comparator);
+    }
+
+    public String getString(){
+        StringBuilder builder = new StringBuilder();
+        for (Stationery s:
+             pack) {
+            builder.append(String.format("name: %s\nprice: %f\ntype: %s\n--------------\n", s.getName(), s.getPrice(), s.getType()));
+        }
+        return builder.toString();
     }
 }

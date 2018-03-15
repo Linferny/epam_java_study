@@ -3,7 +3,6 @@ package javase02.t02.logic;
 import javase02.t02.stationery.Stationery;
 import javase02.t02.stationery.characteristics.StationeryType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,8 +10,8 @@ public class StationeryCounter {
     private List<Stationery> stationeries;
     private HashMap<StationeryType, Integer> counter;
 
-    public StationeryCounter() {
-        stationeries = new ArrayList<>();
+    public StationeryCounter(List<Stationery> stationeries) {
+        this.stationeries = stationeries;
         counter = new HashMap<>();
         for (StationeryType s:
                 StationeryType.values())
@@ -39,5 +38,14 @@ public class StationeryCounter {
     public void removeStationery(Stationery stationery) {
         if (stationeries.remove(stationery))
             counter.replace(stationery.getType(), counter.get(stationery.getType()) - 1);
+    }
+
+    public double getAllValue(){
+        double val = 0;
+        for (Stationery s:
+             stationeries) {
+            val += s.getPrice();
+        }
+        return val;
     }
 }

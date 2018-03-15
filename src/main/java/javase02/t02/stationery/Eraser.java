@@ -13,9 +13,8 @@ public class Eraser extends Stationery {
         this.weight = weight;
     }
 
-    public Eraser(double price, int weight) {
-        super(price);
-        super.type = StationeryType.ERASER;
+    public Eraser(double price, String name, int weight) {
+        super(price, name);
         this.weight = weight;
     }
 }

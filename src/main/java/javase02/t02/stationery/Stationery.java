@@ -2,12 +2,22 @@ package javase02.t02.stationery;
 
 import javase02.t02.stationery.characteristics.StationeryType;
 
-public class Stationery {
+public abstract class Stationery{
     protected StationeryType type;
     protected double price;
+    protected String name;
 
-    public Stationery(double price) {
+    public Stationery(double price, String name) {
         this.price = price;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getPrice() {
