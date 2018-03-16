@@ -1,5 +1,6 @@
 package javase02.t02.logic;
 
+import javase02.t02.stationery.IStationery;
 import javase02.t02.stationery.Stationery;
 import javase02.t02.stationery.characteristics.StationeryType;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Workplace {
-    private List<Stationery> stationeries;
+    private List<IStationery> stationeries;
     private StationeryCounter counter;
 
     public Workplace() {
@@ -19,11 +20,11 @@ public class Workplace {
         return counter.getStationeries();
     }
 
-    public void addStationery(Stationery stationery){
+    public void addStationery(IStationery stationery){
         counter.addStationery(stationery);
     }
 
-    public void removeStationery(Stationery stationery){
+    public void removeStationery(IStationery stationery){
         counter.removeStationery(stationery);
     }
 

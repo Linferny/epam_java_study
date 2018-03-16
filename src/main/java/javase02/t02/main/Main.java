@@ -22,12 +22,12 @@ public class Main {
         Pencil pencil3;
         Ruler ruler1;
 
-        pen1 = new Pen(46.75, "Parker Simple", 7, Material.METAL, Color.BLACK);
-        pen2 = new Pen(15, "Parker Wood", 11, Material.PLASTIC, Color.BLACK);
-        pencil1 = new Pencil(10, "Constructor 1", Material.WOOD, Color.GREY, Hardness.HB, 10);
-        pencil2 = new Pencil(20, "Constructor 2", Material.WOOD, Color.GREY, Hardness.B2, 10);
-        pencil3 = new Pencil(30, "Constructor 3", Material.WOOD, Color.GREY, Hardness.H, 10);
-        ruler1 = new Ruler(45, "Ruler", 30, Material.WOOD);
+        pen1 = Pen.getBuilder().setColor(Color.BLUE).setLength(7).setMaterial(Material.METAL).setName("Parker 1").setPrice(46.75).build();
+        pen2 = Pen.getBuilder().setColor(Color.BLACK).setLength(11).setMaterial(Material.PLASTIC).setName("Parker 0").setPrice(15).build();
+        pencil1 = Pencil.getBuilder().setPrice(10).setName("Constructor 1").setMaterial(Material.WOOD).setColor(Color.GREY).setHardness(Hardness.HB).setLength(10).build();
+        pencil2 = Pencil.getBuilder().setPrice(20).setName("Constructor 2").setMaterial(Material.WOOD).setColor(Color.GREY).setHardness(Hardness.B2).setLength(10).build();
+        pencil3 = Pencil.getBuilder().setPrice(30).setName("Constructor 3").setMaterial(Material.WOOD).setColor(Color.GREY).setHardness(Hardness.H).setLength(10).build();
+        ruler1 = Ruler.getBuilder().setName("RULA").setPrice(46.75).setLength(40).setMaterial(Material.METAL).build();
 
 
         adam.addStationery(pen1);

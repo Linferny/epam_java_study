@@ -9,6 +9,8 @@ import javase02.t02.stationery.characteristics.Hardness;
 import javase02.t02.stationery.characteristics.Material;
 import javase02.t03.model.StarterPack;
 
+import java.time.chrono.Era;
+
 public class Main {
     public static void main(String[] args) {
         Pen pen1;
@@ -20,24 +22,25 @@ public class Main {
         Eraser eraser1;
         Eraser eraser2;
 
-        pen1 = new Pen(46.75, "Parker Simple", 7,Material.METAL, Color.BLACK);
-        pen2 = new Pen(15, "Parker Plastic", 11, Material.PLASTIC, Color.BLACK);
-        pencil1 = new Pencil(10, "Constructor 1",Material.WOOD, Color.GREY, Hardness.HB, 10);
-        pencil2 = new Pencil(15, "Constructor 2", Material.WOOD, Color.GREY, Hardness.B2, 10);
-        pencil3 = new Pencil(30, "Constructor 3", Material.WOOD, Color.GREY, Hardness.H, 10);
-        ruler1 = new Ruler(30, "Ruler", 30, Material.WOOD);
-        eraser1 = new Eraser(30, "Milan", 10);
-        eraser2 = new Eraser(46.75, "Milan big", 20);
+
+        pen1 = Pen.getBuilder().setColor(Color.BLUE).setLength(7).setMaterial(Material.METAL).setName("Parker 1").setPrice(46.75).build();
+        pen2 = Pen.getBuilder().setColor(Color.BLACK).setLength(11).setMaterial(Material.PLASTIC).setName("Parker 0").setPrice(15).build();
+        pencil1 = Pencil.getBuilder().setPrice(10).setName("Constructor 1").setMaterial(Material.WOOD).setColor(Color.GREY).setHardness(Hardness.HB).setLength(10).build();
+        pencil2 = Pencil.getBuilder().setPrice(20).setName("Constructor 2").setMaterial(Material.WOOD).setColor(Color.GREY).setHardness(Hardness.B2).setLength(10).build();
+        pencil3 = Pencil.getBuilder().setPrice(30).setName("Constructor 3").setMaterial(Material.WOOD).setColor(Color.GREY).setHardness(Hardness.H).setLength(10).build();
+        ruler1 = Ruler.getBuilder().setName("RULA").setPrice(30).setLength(40).setMaterial(Material.METAL).build();
+        eraser1 = Eraser.getBuilder().setName("Milan").setPrice(30).setWeight(10).build();
+        eraser2 = Eraser.getBuilder().setName("Milan big").setPrice(46.75).setWeight(20).build();
 
         StarterPack pack1;
         StarterPack pack2;
         StarterPack pack3;
         StarterPack pack4;
 
-        pack1 = new StarterPack(pen2, eraser1, ruler1, pencil2);
-        pack2 = new StarterPack(pencil3, eraser1, ruler1);
-        pack3 = new StarterPack(pen1, pencil1, eraser2);
-        pack4 = new StarterPack(pen2);
+        pack1 = StarterPack.getBuilder(pen2).addEraser(eraser1).addRuler(ruler1).addPencil(pencil2).build();
+        pack2 = StarterPack.getBuilder(pencil3).addEraser(eraser1).addRuler(ruler1).build();
+        pack3 = StarterPack.getBuilder(pen1).addPencil(pencil1).addEraser(eraser2).build();
+        pack4 = StarterPack.getBuilder(pen2).build();
 
         System.out.println("Pack1 before sort:");
         System.out.println(pack1.getString());

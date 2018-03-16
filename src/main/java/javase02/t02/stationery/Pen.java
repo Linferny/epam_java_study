@@ -3,39 +3,119 @@ package javase02.t02.stationery;
 import javase02.t02.stationery.characteristics.*;
 import javase02.t02.stationery.characteristics.StationeryType;
 
-public class Pen extends Stationery {
-    private int length;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+public class Pen implements IPen {
+    private double length;
     private Material material;
     private Color inkColor;
 
-    public int getLength() {
+    @Override
+    public double getLength() {
         return length;
     }
 
-    public void setLength(int length) {
-        this.length = length;
-    }
-
+    @Override
     public Material getMaterial() {
         return material;
     }
 
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
-
-    public Color getInkColor() {
+    @Override
+    public Color getColor() {
         return inkColor;
     }
 
-    public void setInkColor(Color inkColor) {
-        this.inkColor = inkColor;
+    private Stationery _super;
+
+    private Pen() {
     }
 
-    public Pen(double price, String name, int length, Material material, Color inkColor) {
-        super(price, name, StationeryType.PEN);
-        this.length = length;
-        this.material = material;
-        this.inkColor = inkColor;
+    @Override
+    public String getName() {
+        return _super.getName();
+    }
+
+    @Override
+    public double getPrice() {
+        return _super.getPrice();
+    }
+
+    @Override
+    public StationeryType getType() {
+        return _super.getType();
+    }
+
+    public static class Builder implements IPen.Builder<Pen, Builder> {
+
+        private Pen pen;
+        private IStationery.Builder superBuilder;
+
+        private <T extends IStationery, V extends IStationery.Builder<T, V>> Builder init(IStationery.Builder<T, V> superBuilder, Pen pen) {
+            this.superBuilder = superBuilder;
+            this.pen = pen;
+            return this;
+        }
+
+        @Override
+        public Pen build() {
+            try {
+                pen._super = (Stationery) superBuilder.build();
+                return pen;
+            } finally {
+                pen = null;
+            }
+        }
+
+        @Override
+        public Builder setMaterial(Material material) {
+            pen.material = material;
+            return this;
+        }
+
+        @Override
+        public Builder setLength(double length) {
+            pen.length = length;
+            return this;
+        }
+
+        @Override
+        public Builder setColor(Color inkColor) {
+            pen.inkColor = inkColor;
+            return this;
+        }
+
+        @Override
+        public Builder setPrice(double price) {
+            superBuilder.setPrice(price);
+            return this;
+        }
+
+        @Override
+        public Builder setName(String name) {
+            superBuilder.setName(name);
+            return this;
+        }
+    }
+
+    private static Builder builder;
+
+    public static Builder getBuilder() {
+        if (builder == null)
+            builder = new Builder();
+        return builder.init(Stationery.getBuilder(StationeryType.PEN), new Pen());
+    }
+
+    protected String[] getFields() {
+        return new String[]{
+                getType().name(), getName(), Double.toString(getPrice()), getColor().name(), getMaterial().name(), Double.toString(getLength())};
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.stream(getFields())
+                .filter(x -> x != null)
+                .collect(Collectors.joining(", "));
     }
 }

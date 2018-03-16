@@ -1,5 +1,6 @@
 package javase02.t02.logic;
 
+import javase02.t02.stationery.IStationery;
 import javase02.t02.stationery.Stationery;
 import javase02.t02.stationery.characteristics.StationeryType;
 
@@ -32,11 +33,11 @@ public class Worker {
         workplace = new Workplace();
     }
 
-    public void addStationery(Stationery stationery){
+    public void addStationery(IStationery stationery){
         workplace.addStationery(stationery);
     }
 
-    public void removeStationery(Stationery stationery){
+    public void removeStationery(IStationery stationery){
         workplace.removeStationery(stationery);
     }
 
