@@ -1,9 +1,13 @@
 package javase02.t05.logic;
 
-import java.util.HashMap;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Student {
-    private String name;
-    private String surname;
-    private String patronymic;
+    String name;
+    String surname;
+    String patronymic;
 }
