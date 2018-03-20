@@ -25,8 +25,8 @@ public class Group<T extends Number & Comparable<? super T>> {
         return studentsEvaluations.get(student);
     }
 
-    public void addMark(Student student, Mark mark) {
-        if (mark.compare(min) < 0 || mark.compare(max) > 0)
+    public void addMark(Student student, T mark) {
+        if (mark.compareTo(min) < 0 || mark.compareTo(max) > 0)
             return;
         if (studentsEvaluations.containsKey(student))
             studentsEvaluations.get(student)

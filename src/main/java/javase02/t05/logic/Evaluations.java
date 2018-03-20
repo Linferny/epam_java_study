@@ -3,6 +3,7 @@ package javase02.t05.logic;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,19 +12,15 @@ public class Evaluations<T extends Number & Comparable<? super T>> {
     List<Mark<T>> marks;
 
     public Evaluations() {
-        marks = new ArrayList<Mark<T>>();
+        marks = new ArrayList<>();
     }
 
-    public void addMark(Mark mark) {
-        marks.add(mark);
+    public void addMark(T mark) {
+        marks.add(new Mark<>(mark, LocalDateTime.now()));
     }
 
     public boolean removeMark(Mark mark) {
         return marks.remove(mark);
-    }
-
-    public Mark[] getMarks() {
-        return marks.toArray(new Mark[marks.size()]);
     }
 
     @Override

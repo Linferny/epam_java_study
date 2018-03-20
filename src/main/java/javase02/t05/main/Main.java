@@ -35,31 +35,32 @@ public class Main {
                 students) {
             if (rand.nextBoolean())
                 for (int i = 0; i < 10 + rand.nextInt(10); i++) {
-                    math1.addMark(student, new Mark<Integer>(rand.nextInt(101), LocalDateTime.now()));
+                    math1.addMark(student, rand.nextInt(101));
                 }
             if (rand.nextBoolean())
                 for (int i = 0; i < 10 + rand.nextInt(10); i++) {
-                    math2.addMark(student, new Mark<Integer>(rand.nextInt(101), LocalDateTime.now()));
+                    math2.addMark(student, rand.nextInt(101));
                 }
             if (rand.nextBoolean())
                 for (int i = 0; i < 10 + rand.nextInt(10); i++) {
-                    philos.addMark(student, new Mark<Double>(rand.nextInt(101) / 10.0, LocalDateTime.now()));
+                    philos.addMark(student, rand.nextInt(101) / 10.0);
                 }
             if (rand.nextBoolean())
                 for (int i = 0; i < 10 + rand.nextInt(10); i++) {
-                    phys.addMark(student, new Mark<Integer>(1 + rand.nextInt(5), LocalDateTime.now()));
+                    phys.addMark(student, 1 + rand.nextInt(5));
                 }
             if (rand.nextBoolean())
                 for (int i = 0; i < 10 + rand.nextInt(10); i++) {
-                    lang.addMark(student, new Mark<Integer>(1 + rand.nextInt(10), LocalDateTime.now()));
+                    lang.addMark(student, 1 + rand.nextInt(10));
                 }
         }
 
         HashMap<Group, Evaluations> marks = groupLogic.getMarks(students[3]);
 
+        System.out.println(students[3].toString());
         for (Group group :
                 groupLogic.getGroups()) {
-            if (marks.containsKey(group)){
+            if (marks.containsKey(group)) {
                 System.out.println(String.format("%s: %s", group.getDiscipline().name(), marks.get(group).toString()));
             }
         }
