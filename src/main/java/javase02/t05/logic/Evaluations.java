@@ -7,22 +7,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Evaluations <T extends Number & Comparable<? super T>> {
+public class Evaluations<T extends Number & Comparable<? super T>> {
     List<Mark<T>> marks;
 
-    public Evaluations(){
+    public Evaluations() {
         marks = new ArrayList<Mark<T>>();
     }
 
-    public void addMark(Mark mark){
+    public void addMark(Mark mark) {
         marks.add(mark);
     }
 
-    public boolean removeMark(Mark mark){
+    public boolean removeMark(Mark mark) {
         return marks.remove(mark);
     }
 
-    public Mark[] getMarks(){
+    public Mark[] getMarks() {
         return marks.toArray(new Mark[marks.size()]);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder strBld = new StringBuilder();
+        for (Mark m :
+                marks) {
+            strBld.append(m.toString());
+            strBld.append(",");
+        }
+        return strBld.toString();
     }
 }
