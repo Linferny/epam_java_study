@@ -7,11 +7,16 @@ import javase02.t02.stationery.Ruler;
 import javase02.t02.stationery.characteristics.Color;
 import javase02.t02.stationery.characteristics.Hardness;
 import javase02.t02.stationery.characteristics.Material;
+import javase02.t03.logic.BadList;
 import javase02.t03.model.StarterPack;
 
-import java.time.chrono.Era;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Main {
+public class Main<T> {
     public static void main(String[] args) {
         Pen pen1;
         Pen pen2;

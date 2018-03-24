@@ -7,5 +7,5 @@ public enum Discipline {
     PHYSICS,
     MATHEMATICS,
     LANGUAGE,
-    PHILOSOPHY
+    PHILOSOPHY;
 }

@@ -1,6 +1,7 @@
 package javase02.t03.model;
 
 import javase02.t02.stationery.*;
+import javase02.t03.logic.BadList;
 import javase02.t04.logic.PackSorting;
 
 import java.lang.reflect.Array;
@@ -9,15 +10,15 @@ import java.util.Comparator;
 import java.util.List;
 
 public class StarterPack implements PackSorting, IStarterPack {
-    private List<IStationery> pack;
+    private BadList<IStationery> pack;
 
     private StarterPack(Pen pen) {
-        pack = new ArrayList<>();
+        pack = new BadList<>();
         pack.add(pen);
     }
 
     private StarterPack(Pencil pencil) {
-        pack = new ArrayList<>();
+        pack = new BadList<>();
         pack.add(pencil);
     }
 
@@ -110,7 +111,7 @@ public class StarterPack implements PackSorting, IStarterPack {
     public String getString() {
         StringBuilder sb = new StringBuilder();
         for (IStationery s :
-                pack) {
+                pack.toArray(IStationery.class)) {
             sb.append(s.toString());
             sb.append('\n');
         }
@@ -119,7 +120,7 @@ public class StarterPack implements PackSorting, IStarterPack {
 
     @Override
     public Stationery[] getStationeries() {
-        Stationery[] stationeries = new Stationery[pack.size()];
-        return pack.toArray(stationeries);
+        Stationery[] stationeries = new Stationery[pack.getSize()];
+        return (Stationery[])pack.toArray(IStationery.class);
     }
 }

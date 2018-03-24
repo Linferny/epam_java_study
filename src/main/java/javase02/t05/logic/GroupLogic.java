@@ -15,9 +15,6 @@ public class GroupLogic {
         groups = new ArrayList<>();
     }
 
-    public <T extends Number & Comparable<? super T>> void addGroup(Discipline discipline, T min, T max) {
-        groups.add(new Group<>(discipline, min, max));
-    }
     public  void addGroup(Group group) {
         groups.add(group);
     }

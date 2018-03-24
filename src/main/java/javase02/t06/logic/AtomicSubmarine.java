@@ -1,11 +1,13 @@
 package javase02.t06.logic;
 
+import javase02.t07.annotation.AtomicAnnotation;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@AtomicAnnotation(isBroken = true, createdBy ="Sergey")
 public class AtomicSubmarine {
     Engine engine;
     double depth;
