@@ -28,24 +28,81 @@ public class Main<T> {
         Eraser eraser2;
 
 
-        pen1 = Pen.getBuilder().setColor(Color.BLUE).setLength(7).setMaterial(Material.METAL).setName("Parker 1").setPrice(46.75).build();
-        pen2 = Pen.getBuilder().setColor(Color.BLACK).setLength(11).setMaterial(Material.PLASTIC).setName("Parker 0").setPrice(15).build();
-        pencil1 = Pencil.getBuilder().setPrice(10).setName("Constructor 1").setMaterial(Material.WOOD).setColor(Color.GREY).setHardness(Hardness.HB).setLength(10).build();
-        pencil2 = Pencil.getBuilder().setPrice(20).setName("Constructor 2").setMaterial(Material.WOOD).setColor(Color.GREY).setHardness(Hardness.B2).setLength(10).build();
-        pencil3 = Pencil.getBuilder().setPrice(30).setName("Constructor 3").setMaterial(Material.WOOD).setColor(Color.GREY).setHardness(Hardness.H).setLength(10).build();
-        ruler1 = Ruler.getBuilder().setName("RULA").setPrice(30).setLength(40).setMaterial(Material.METAL).build();
-        eraser1 = Eraser.getBuilder().setName("Milan").setPrice(30).setWeight(10).build();
-        eraser2 = Eraser.getBuilder().setName("Milan big").setPrice(46.75).setWeight(20).build();
+        pen1 = Pen.getBuilder()
+                .setName("Parker 1")
+                .setPrice(46.75)
+                .setColor(Color.BLUE)
+                .setLength(7)
+                .setMaterial(Material.METAL)
+                .build();
+        pen2 = Pen.getBuilder()
+                .setName("Parker 0")
+                .setPrice(15)
+                .setColor(Color.BLACK)
+                .setLength(11)
+                .setMaterial(Material.PLASTIC)
+                .build();
+        pencil1 = Pencil.getBuilder()
+                .setPrice(10)
+                .setName("Constructor 1")
+                .setMaterial(Material.WOOD)
+                .setColor(Color.GREY)
+                .setHardness(Hardness.HB)
+                .setLength(10)
+                .build();
+        pencil2 = Pencil.getBuilder()
+                .setPrice(20)
+                .setName("Constructor 2")
+                .setMaterial(Material.WOOD)
+                .setColor(Color.GREY)
+                .setHardness(Hardness.B2)
+                .setLength(10)
+                .build();
+        pencil3 = Pencil.getBuilder()
+                .setPrice(30)
+                .setName("Constructor 3")
+                .setMaterial(Material.WOOD)
+                .setColor(Color.GREY)
+                .setHardness(Hardness.H)
+                .setLength(10)
+                .build();
+        ruler1 = Ruler.getBuilder()
+                .setName("RULA")
+                .setPrice(30)
+                .setLength(40)
+                .setMaterial(Material.METAL)
+                .build();
+        eraser1 = Eraser.getBuilder()
+                .setName("Milan")
+                .setPrice(30)
+                .setWeight(10)
+                .build();
+        eraser2 = Eraser.getBuilder()
+                .setName("Milan big")
+                .setPrice(46.75)
+                .setWeight(20)
+                .build();
 
         StarterPack pack1;
         StarterPack pack2;
         StarterPack pack3;
         StarterPack pack4;
 
-        pack1 = StarterPack.getBuilder(pen2).addEraser(eraser1).addRuler(ruler1).addPencil(pencil2).build();
-        pack2 = StarterPack.getBuilder(pencil3).addEraser(eraser1).addRuler(ruler1).build();
-        pack3 = StarterPack.getBuilder(pen1).addPencil(pencil1).addEraser(eraser2).build();
-        pack4 = StarterPack.getBuilder(pen2).build();
+        pack1 = StarterPack.getBuilder(pen2)
+                .addEraser(eraser1)
+                .addRuler(ruler1)
+                .addPencil(pencil2)
+                .build();
+        pack2 = StarterPack.getBuilder(pencil3)
+                .addEraser(eraser1)
+                .addRuler(ruler1)
+                .build();
+        pack3 = StarterPack.getBuilder(pen1)
+                .addPencil(pencil1)
+                .addEraser(eraser2)
+                .build();
+        pack4 = StarterPack.getBuilder(pen2)
+                .build();
 
         System.out.println("Pack1 before sort:");
         System.out.println(pack1.getString());
