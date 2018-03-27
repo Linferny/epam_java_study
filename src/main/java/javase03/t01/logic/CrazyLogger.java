@@ -68,7 +68,7 @@ public class CrazyLogger {
             }
         }
 
-        return find.size() == 0 ? new String[]{""} : find.toArray(new String[find.size()]);
+        return find.size() == 0 ? new String[]{""} : find.toArray(new String[0]);
     }
 
     public String[] searchByDate(boolean print, String pattern, LocalDateTime... dates) {
@@ -91,11 +91,11 @@ public class CrazyLogger {
                     if (print)
                         System.out.println("Wrong pattern!");
                     log("WRONG PATTERN!");
-                    return find.size() == 0 ? new String[]{""} : find.toArray(new String[find.size()]);
+                    return find.size() == 0 ? new String[]{""} : find.toArray(new String[0]);
                 }
             }
         }
 
-        return find.size() == 0 ? new String[]{""} : find.toArray(new String[find.size()]);
+        return find.size() == 0 ? new String[]{""} : find.toArray(new String[0]);
     }
 }
