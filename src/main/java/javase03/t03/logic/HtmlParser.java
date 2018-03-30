@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,15 +21,19 @@ public class HtmlParser {
     }
 
     public String[] parse() {
+        //PATTERN div/p tags:
         //"<(div|p)>.+</(div|p)>"
+        //PATTERN for all tags and inside:
         //<[/]?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[\^'">\s]+))?)+\s*|\s*)[/]?>
 
-        //([(]?[Рр]ис[.]|[Рр]исун(ке|ка))\s*(\d+[,]?)+[)]?
-        //(\s|э[.]д[.]с[.]?|[А-яё,()0-9-–»«+=])*(([(]?[Рр]ис[.]|[Рр]исун(ке|ка))\s*(\d+[,]?)+[)]?)(э[.]д[.]с[.]?|([(]?[Рр]ис[.]|[Рр]исун(ке|ка))\s+(\d+[,]?)+[)]?|[А-яё,()0-9-–»«+=]|\s)*[.?!]
+        //PATTERN for sentences:
+        //(\s|э[.]д[.]с[.]?|[А-яё,()0-9-–»«+=])*(([(]?[Рр]ис[.]|[Рр]исун(ке|ка))\s*(\d+(-?[a-zа-я]?[,]?)+)+[)]?)(э[.]д[.]с[.]?|(([(]?[Рр]ис[.]|[Рр]исун(ке|ка))\s*(\d+(-?[a-zа-я]?[,]?)+)+[)]?)|[А-яё,()0-9-–»«+=]|\s)*[.?!]
 
         String textTagsRegex = "<(div|p)>.+</(div|p)>";
         String tagRegex = "<[/]?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[\\^'\">\\s]+))?)+\\s*|\\s*)[/]?>";
-        String sentenceRegex = "(\\s|э[.]д[.]с[.]?|[А-яё,()0-9-–»«+=])*(([(]?[Рр]ис[.]|[Рр]исун(ке|ка))\\s*(\\d+[,]?)+[)]?)(э[.]д[.]с[.]?|([(]?[Рр]ис[.]|[Рр]исун(ке|ка))\\s+(\\d+[,]?)+[)]?|[А-яё,()0-9-–»«+=]|\\s)*[.?!]";
+        String sentenceRegex = "(\\s|э[.]д[.]с[.]?|[А-яё,()0-9-–»«+=])*" +
+                "(([(]?[Рр]ис[.]|[Рр]исун(ке|ка))\\s*(\\d+(-?[a-zа-я]?[,]?)+)+[)]?)" +
+                "(э[.]д[.]с[.]?|(([(]?[Рр]ис[.]|[Рр]исун(ке|ка))\\s*(\\d+(-?[a-zа-я]?[,]?)+)+[)]?)|[А-яё,()0-9-–»«+=]|\\s)*[.?!]";
 
         String html = readHtml();
         html = clearHtml(html);
@@ -42,11 +47,42 @@ public class HtmlParser {
         return sentences;
     }
 
-    public boolean checkForOrder(String[] sentences){
+    public boolean checkForOrder(String[] sentences) {
+        //PATTERN for image:
+        //(([(]?[Рр]ис[.]|[Рр]исун(ке|ка))\s*(\d+(-?[a-zа-я]?[,]?)+)+[)]?)
+
+        if (sentences.length < 1)
+            return false;
+
+        StringBuilder allSentences = new StringBuilder();
+        Arrays.stream(sentences).forEach(allSentences::append);
+
+        Pattern imgPattern = Pattern.compile("(([(]?[Рр]ис[.]|[Рр]исун(ке|ка))\\s*(\\d+(-?[a-zа-я]?[,]?)+)+[)]?)");
+        Pattern numPattern = Pattern.compile("\\d+");
+
+        int curNum;
+        int maxNum = -1;
+
+        Matcher matcher = imgPattern.matcher(allSentences);
+        while (matcher.find()) {
+            Matcher numMatch = numPattern.matcher(matcher.group());
+            while (numMatch.find()) {
+                curNum = Integer.parseInt(numMatch.group());
+
+                if (curNum > maxNum) {
+                    if (maxNum == -1 || curNum == maxNum + 1)
+                        maxNum = curNum;
+                    else
+                        return false;
+                }
+
+            }
+        }
+
         return true;
     }
 
-    public String readHtml() {
+    private String readHtml() {
         StringBuilder html = new StringBuilder();
         try {
             Path path = Paths.get(Thread.currentThread().getContextClassLoader().getResource("javase03/t03/html").toURI());
@@ -58,6 +94,8 @@ public class HtmlParser {
             System.out.println("ERR: URI Exception!");
         } catch (IOException ioEx) {
             System.out.println("ERR: IO Exception!");
+        } catch (NullPointerException e) {
+            System.out.println("ERR: Null resource");
         }
         return html.toString();
     }
@@ -108,6 +146,8 @@ public class HtmlParser {
 
 
 /*
+OBSOLED:
+
 Рисунок рис paser:
 ([(](рис[.]|pic[.]|Pic[.]|Рис[.])\s+\d+([a-bа-я]|[,-])*[)])|([Рр](исунке|исунок)\s\d+)
 
