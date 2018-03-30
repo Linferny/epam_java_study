@@ -88,7 +88,7 @@ public class HtmlParser {
             Path path = Paths.get(Thread.currentThread().getContextClassLoader().getResource("javase03/t03/html").toURI());
             Files.lines(path, Charset.forName("CP1251")).forEach(line -> {
                 html.append(line);
-                html.append("\n");
+                //html.append("\n");
             });
         } catch (URISyntaxException uriEx) {
             System.out.println("ERR: URI Exception!");
