@@ -1,4 +1,4 @@
-package javase04.t01.logic;
+package javase04.t02.logic;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -28,7 +28,7 @@ public class JavaReader {
 
     }
 
-    public void analyzeJavaCode(String resultFileName) {
+    public void analyzeJavaCode(String resultFileName){
         String fileName = "javase04.t01/Pen";
         checkForKeyWords(readFromFile(fileName), resultFileName);
     }
@@ -77,8 +77,8 @@ public class JavaReader {
             }
         }
 
-        try (OutputStream outputStream = new FileOutputStream(file, false)) {
-            outputStream.write(toWrite.toString().getBytes(Charset.forName("CP1251")));
+        try (Writer writer = new FileWriter(file, false)) {
+            writer.write(toWrite.toString());
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -91,15 +91,21 @@ public class JavaReader {
             ClassLoader classLoader = getClass().getClassLoader();
             file = new File(classLoader.getResource(fileName).getFile());
 
-            try (InputStream inputStream = new FileInputStream(file)) {
-                javaCode.append(new String(inputStream.readAllBytes(), Charset.forName("CP1251")));
-            } catch (IOException e) {
+            char[] buffer = new char[256];
+
+            try (Reader reader = new FileReader(file)){
+                int countChar;
+                while (reader.ready()){
+                    countChar = reader.read(buffer);
+                    javaCode.append(new String(buffer,0, countChar));
+                }
+            } catch(IOException e){
                 System.out.println(e);
             }
-        } catch (NullPointerException e) {
+        }catch (NullPointerException e)
+        {
             System.out.println(e);
         }
-
         return javaCode.toString();
     }
 }

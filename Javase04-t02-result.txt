@@ -1,0 +1,16 @@
+   boolean: 1
+      char: 3
+     class: 1
+        do: 8
+     false: 1
+       for: 1
+        if: 3
+    import: 4
+       int: 2
+      null: 1
+   package: 1
+   private: 6
+    public: 11
+    return: 12
+      this: 7
+      true: 2
