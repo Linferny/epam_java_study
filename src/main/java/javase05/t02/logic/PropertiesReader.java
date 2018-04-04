@@ -22,10 +22,10 @@ public class PropertiesReader {
         try (InputStream inputStream = loader.getResourceAsStream(path)) {
             properties.load(inputStream);
         } catch (IOException | NullPointerException e) {
-            System.out.println("Can't load .properies file");
-            e.printStackTrace();
+            System.err.println("Can't load .properies file");
             return false;
         }
+        System.out.println("Properties loaded!");
         return true;
     }
 

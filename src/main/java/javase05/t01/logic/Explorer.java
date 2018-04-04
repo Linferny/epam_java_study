@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -15,8 +16,6 @@ public class Explorer {
     File[] directories;
     Notepad notepad;
 
-    final String[] commands = {"cd", "edit", "pwd", "ls", "help"};
-
     public Explorer() {
         notepad = new Notepad();
         currentDirectory = new File(System.getProperty("user.dir"));
@@ -25,6 +24,8 @@ public class Explorer {
     }
 
     public boolean inputCommand() {
+        String[] files = currentDirectory.getPath().split("\\\\|/");
+        System.out.print("@\\" + files[files.length - 1] + ": ");
         Scanner scanner = getScannerWithSin();
         scanner.useDelimiter("\n");
 
@@ -45,7 +46,7 @@ public class Explorer {
             printCurrentDirectory();
         } else if (command.matches("^ls.*")) {
             printFilesAndDirectories();
-        } else if (command.matches("^edit.*")){
+        } else if (command.matches("^edit.*")) {
             String[] parts = command.split(" ");
             if (parts.length != 2) {
                 System.out.println("HELP: edit [file_name]");
@@ -53,12 +54,57 @@ public class Explorer {
             }
 
             openTextFile(parts[1]);
-        } else if (command.matches("^exit.*")){
+        } else if (command.matches("^exit.*")) {
             return false;
+        } else if (command.matches("^create.*")) {
+            String[] parts = command.split(" ");
+            if (parts.length != 2) {
+                System.out.println("HELP: create [file_name].txt");
+                return true;
+            }
+            createFile(parts[1]);
+        } else if (command.matches("^delete.*")) {
+            String[] parts = command.split(" ");
+            if (parts.length != 2) {
+                System.out.println("HELP: delete [file_name].txt");
+                return true;
+            }
+            deleteFile(parts[1]);
         } else {
-            System.out.println("List commands:\npwd\ncd [dir]\nedit [file_name]\nls\nexit");
+            System.out.println("List commands:\ncreate [file_name].txt\ndelete [file_name].txt\npwd\ncd [dir]\nedit [file_name]\nls\nexit");
         }
         return true;
+    }
+
+    private void createFile(String name) {
+        if (!name.matches(".*[.]txt$")) {
+            System.err.println("File must be .txt!");
+            return;
+        }
+        File file = new File(currentDirectory.getPath() + "\\" + name);
+        if (file.exists()) {
+            System.out.println("File already exist!");
+            return;
+        }
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            System.err.println(String.format("Can't create file %s", name));
+        }
+        System.out.printf("File created!");
+    }
+
+    private void deleteFile(String file) {
+        for (int i = 0; i < directories.length; i++) {
+            String[] files = directories[i].getPath().split("\\\\|/");
+            if (directories[i].listFiles() != null)
+                continue;
+            if (file.equalsIgnoreCase(files[files.length - 1])) {
+                if (!directories[i].delete())
+                    System.err.println("Can't delete file");
+            }
+        }
+        System.out.println("File deleted!");
     }
 
     private void printCurrentDirectory() {
@@ -118,19 +164,24 @@ public class Explorer {
         scanner.useDelimiter("\n");
 
         boolean exit = false;
-        System.out.println("Commands: print\nget [line]\nedit [line] [text]\nadd [text]\nwrite\nclose\n----------------------");
+        System.out.println("Commands:\nprint\nget [line]\nedit [line] [text]\nadd [text]\nwrite\nclose\n----------------------");
         while (!exit) {
             String command = scanner.next();
 
             if (command.matches("^edit.*")) {
                 String[] parts = command.split(" ");
-                if (parts.length != 3) {
+                if (parts.length < 3) {
                     System.out.printf("Wrong command!");
                     continue;
                 }
                 try {
                     int line = Integer.parseInt(parts[1]);
-                    if (!notepad.editText(line, parts[2])) {
+                    StringBuilder builder = new StringBuilder();
+                    for (int i = 2; i < parts.length; i++) {
+                        builder.append(parts[i]);
+                        builder.append(" ");
+                    }
+                    if (!notepad.editText(line, builder.toString())) {
                         System.out.printf("Text not edited");
                     }
                 } catch (NumberFormatException e) {
@@ -150,11 +201,16 @@ public class Explorer {
                 }
             } else if (command.matches("^add.*")) {
                 String[] parts = command.split(" ");
-                if (parts.length != 2) {
+                if (parts.length < 2) {
                     System.out.printf("Wrong command!");
                     continue;
                 }
-                notepad.addText(parts[1]);
+                StringBuilder builder = new StringBuilder();
+                for (int i = 1; i < parts.length; i++) {
+                    builder.append(parts[i]);
+                    builder.append(" ");
+                }
+                notepad.addText(builder.toString());
             } else if (command.matches("^write.*")) {
                 notepad.writeFile();
             } else if (command.matches("^close.*")) {
@@ -162,8 +218,8 @@ public class Explorer {
                 exit = true;
             } else if (command.matches("^print.*")) {
                 notepad.printFile();
-            } else{
-                System.out.println("Commands: print\nget [line]\nedit [line] [text]\nadd [text]\nwrite\nclose\n----------------------");
+            } else {
+                System.out.println("Commands:\nprint\nget [line]\nedit [line] [text]\nadd [text]\nwrite\nclose\n----------------------");
             }
         }
     }
