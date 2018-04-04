@@ -132,7 +132,6 @@ public class Explorer {
                     int line = Integer.parseInt(parts[1]);
                     if (!notepad.editText(line, parts[2])) {
                         System.out.printf("Text not edited");
-                        continue;
                     }
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
