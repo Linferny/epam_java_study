@@ -7,13 +7,9 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Explorer  explorer = new Explorer();
-        /*
-        explorer.printFilesAndDrirectories();
-        explorer.changeDirectory("target");
-        explorer.printCurrentDirectory();
-        explorer.printFilesAndDrirectories();
-        */
 
+        while (explorer.inputCommand()){
 
+        }
     }
 }

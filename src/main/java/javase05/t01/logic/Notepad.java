@@ -4,20 +4,30 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Notepad {
     File file;
     boolean readyToEdit;
     List<String> textLines;
+    String fileExtentionRegex = ".txt$";
 
-    public Notepad(String path) {
-        file = new File(path);
+    public Notepad() {
     }
 
-    public void loadFile() {
-        readyToEdit = false;
+    public boolean loadFile(String path) {
+        closeFile();
+        textLines = new ArrayList<>();
+
+        if (!Pattern.compile(fileExtentionRegex).matcher(path).find()){
+            System.out.println("File type must be .txt!");
+            return false;
+        }
+
+        file = new File(path);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             while (reader.ready()) {
                 textLines.add(reader.readLine());
@@ -25,7 +35,7 @@ public class Notepad {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        readyToEdit = true;
+        return readyToEdit = true;
     }
 
     public void printFile() {
