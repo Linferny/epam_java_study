@@ -4,18 +4,23 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PropertiesReader {
-    Properties properties;
+    List<String> keys;
+    List<String> values;
 
     public PropertiesReader() {
-
+        keys = new ArrayList<>();
+        values = new ArrayList<>();
     }
 
     public boolean loadProperties(String path) {
-        properties = new Properties();
+        Properties properties = new Properties();
 
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
@@ -25,16 +30,33 @@ public class PropertiesReader {
             System.err.println("Can't load .properies file");
             return false;
         }
+
+        keys.clear();
+        values.clear();
+
+        // Возможно, здесь есть вероятность ошибки, но это не точно.
+        // Может ли список ключей не совпасть со списком значений?
+        for (Object o : properties.values()) {
+            values.add((String) o);
+        }
+        Iterator<Object> key = properties.keys().asIterator();
+        while (key.hasNext()) {
+            keys.add((String) key.next());
+        }
+
         System.out.println("Properties loaded!");
         return true;
     }
 
     public String getProperty(String propertyName) {
-        if (properties == null)
+        if (keys.size() == 0)
             return "";
-        String prop = properties.getProperty(propertyName);
-        if (prop == null)
+        try {
+            String prop = values.get(keys.indexOf(propertyName));
+            return prop;
+        } catch (IndexOutOfBoundsException e){
             System.err.println("Property not found!");
-        return prop == null ? "" : prop;
+        }
+        return "";
     }
 }

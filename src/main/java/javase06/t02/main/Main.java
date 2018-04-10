@@ -1,4 +1,4 @@
-package javase05.t02.main;
+package javase06.t02.main;
 
 import javase05.t02.logic.PropertiesReader;
 
