@@ -1,13 +1,18 @@
 package javase07.t03.waitnotify;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class SharedResource {
     private List<Integer> list;
+    @Getter
+    private ReentrantLock locker = new ReentrantLock();
 
     public SharedResource() {
-        list = new ArrayList<Integer>();
+        list = new ArrayList<>();
     }
 
     public void setElement(Integer element) {

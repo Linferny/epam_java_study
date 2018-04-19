@@ -17,8 +17,10 @@ public class IntegerSetterGetter extends Thread {
         run = false;
     }
 
+    @Override
     public void run() {
         int action;
+
         try {
             while (run) {
                 action = rand.nextInt(1000);
@@ -38,19 +40,21 @@ public class IntegerSetterGetter extends Thread {
     private void getIntegersFromResource() throws InterruptedException {
         Integer number;
         synchronized (resource) {
-            System.out.println("Поток " + getName()
-                    + " хочет извлечь число.");
+            System.out.println("Поток " + getName() + " хочет извлечь число.");
             number = resource.getELement();
-            while (number == null) {
-                System.out.println("Поток " + getName()
-                        + " ждет пока очередь заполнится.");
-                resource.wait();
-                System.out.println("Поток " + getName() + " возобновилработу.");
+
+            int countOfTries = 4;
+
+            for (; number == null && countOfTries > 0; countOfTries--) {
+                System.out.println("Поток " + getName() + " ждет пока очередь заполнится.");
+                resource.wait(10);
+                System.out.println("Поток " + getName() + " возобновил работу.");
                 number = resource.getELement();
             }
-            System.out
-                    .println("Поток " + getName() + " извлек число " +
-                            number);
+            if (countOfTries != 0)
+                System.out.println("Поток " + getName() + " извлек число " + number);
+            else
+                System.out.println("Поток " + getName() + " потратил попытки извлечь число");
         }
     }
 
@@ -58,8 +62,7 @@ public class IntegerSetterGetter extends Thread {
         Integer number = rand.nextInt(500);
         synchronized (resource) {
             resource.setElement(number);
-            System.out.println("Поток " + getName() + " записал число "
-                    + number);
+            System.out.println("Поток " + getName() + " записал число " + number);
             resource.notify();
         }
     }
